@@ -19,10 +19,10 @@ if (process.env.NODE_ENV !== 'production') {
   global.__prisma = prisma;
 }
 
-prisma.$on('error', (e) => {
+prisma.$on('error' as never, (e) => {
   logger.error('Prisma error:', e);
 });
 
-prisma.$on('warn', (e) => {
+prisma.$on('warn' as never, (e) => {
   logger.warn('Prisma warning:', e);
 });
