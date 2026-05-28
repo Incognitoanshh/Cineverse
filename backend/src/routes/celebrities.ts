@@ -1,3 +1,6 @@
+`src/routes/celebrities.ts`
+
+```ts
 import { Router } from 'express';
 import { prisma } from '../config/database';
 import { AppError } from '../utils/AppError';
@@ -8,6 +11,7 @@ router.get('/:slug', async (req, res, next) => {
   try {
     const celebrity = await prisma.celebrity.findUnique({
       where: { slug: req.params.slug },
+
       include: {
         movieCast: {
           include: {
@@ -22,6 +26,7 @@ router.get('/:slug', async (req, res, next) => {
               },
             },
           },
+
           take: 50,
         },
 
@@ -38,6 +43,7 @@ router.get('/:slug', async (req, res, next) => {
               },
             },
           },
+
           take: 30,
         },
 
@@ -60,12 +66,11 @@ router.get('/:slug', async (req, res, next) => {
         fullName: celebrity.name,
         birthday: celebrity.birthday,
         deathday: celebrity.deathday,
-        birthplace: celebrity.placeOfBirth,
+        birthPlace: celebrity.birthPlace,
         gender: celebrity.gender,
         department: celebrity.knownForDept,
         popularity: celebrity.popularity,
         biography: celebrity.biography,
-        knownAs: celebrity.alsoKnownAs || [],
       },
 
       knownFor,
@@ -98,3 +103,4 @@ router.get('/:slug', async (req, res, next) => {
 });
 
 export default router;
+```
