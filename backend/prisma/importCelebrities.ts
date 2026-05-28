@@ -1,6 +1,4 @@
-`prisma/importCelebrities.ts`
 
-```ts
 import axios from 'axios';
 import { PrismaClient } from '@prisma/client';
 
@@ -8,9 +6,14 @@ const prisma = new PrismaClient();
 
 const API_KEY = process.env.TMDB_API_KEY;
 
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function importCelebrities() {
   try {
-    for (let page = 1; page <= 20; page++) {
+    // TEMPORARY: only 3 pages to avoid TMDB rate-limit
+    for (let page = 1; page <= 3; page++) {
       console.log(`Importing page ${page}...`);
 
       const res = await axios.get(
@@ -83,6 +86,9 @@ async function importCelebrities() {
           });
 
           console.log(`Imported: ${person.name}`);
+
+          // delay to avoid TMDB connection reset
+          await delay(500);
         } catch (err) {
           console.log(`Skipped: ${person.name}`);
         }
@@ -98,4 +104,3 @@ async function importCelebrities() {
 }
 
 importCelebrities();
-```

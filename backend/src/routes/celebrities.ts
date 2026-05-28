@@ -1,6 +1,6 @@
 `src/routes/celebrities.ts`
 
-```ts
+
 import { Router } from 'express';
 import { prisma } from '../config/database';
 import { AppError } from '../utils/AppError';
@@ -103,4 +103,4 @@ router.get('/:slug', async (req, res, next) => {
 });
 
 export default router;
-```
+
