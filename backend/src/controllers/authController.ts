@@ -46,11 +46,11 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       select: { id: true, username: true, email: true, displayName: true, role: true },
     });
 
-    await sendEmail({
-      to: email,
-      subject: 'Verify your CineVerse account',
-      html: `<h1>Welcome to CineVerse!</h1><p>Click <a href="${process.env.FRONTEND_URL}/verify-email?token=${verifyToken}">here</a> to verify.</p>`,
-    });
+    // await sendEmail({
+    //   to: email,
+    //   subject: 'Verify your CineVerse account',
+    //   html: `<h1>Welcome to CineVerse!</h1><p>Click <a href="${process.env.FRONTEND_URL}/verify-email?token=${verifyToken}">here</a> to verify.</p>`,
+    // });
 
     const { accessToken, refreshToken } = generateTokens(user.id, user.role);
 
@@ -115,7 +115,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       where: { id: user.id },
       data: { lastLoginAt: new Date() },
     });
-
+ 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
